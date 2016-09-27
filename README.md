@@ -1,12 +1,8 @@
 # PosterApi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/poster_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+PosterApi is a wrapper for cloud HoReCa automatization ["Poster"](https://joinposter.com).
 
 ## Installation
-
-Add this line to your application's Gemfile:
 
 ```ruby
 gem 'poster_api'
@@ -22,7 +18,36 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+#### Client
+
+Client is used to make requests to poster.
+
+```ruby
+access_token    = "745d516e1b9320ed85b84d5bfda14148"
+account         = "demo"
+response_format = "json"
+poster_method   = "dash.getAnalytics"
+params          = { id: 2, type: "product" }
+
+client = PosterApi::Client.new(access_token, account, response_format) # account and response_format can be defined in configuration
+res    = client.get(poster_method, params) # instead of get can be post
+res.status # response status
+res.body # response body
+```
+
+#### Configuration
+
+Depending on your needs you may predefine some variables to not put it implicitely during gem usage.
+
+```ruby
+PosterApi.configure do |config|
+  config.response_format = 'json'
+  config.client_id = 'client_id'
+  config.client_secret = 'client_secret'
+  config.account = 'account'
+end
+```
+
 
 ## Development
 
@@ -32,10 +57,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/poster_api.
+Bug reports and pull requests are welcome on GitHub at https://github.com/AlexBeznos/poster_api.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
